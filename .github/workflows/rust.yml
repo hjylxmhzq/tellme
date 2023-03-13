@@ -18,6 +18,9 @@ defaults:
     # necessary for windows
     shell: bash
 
+permissions:
+  contents: write
+
 jobs:
   cross_build:
     name: Cross Build
