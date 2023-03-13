@@ -1,5 +1,3 @@
-#![feature(fs_try_exists)]
-
 mod api;
 mod token;
 mod loading;

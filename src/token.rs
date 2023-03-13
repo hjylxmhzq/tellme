@@ -1,7 +1,7 @@
 use std::{
     fs,
     io::{Read, Write},
-    sync::{Arc, Mutex},
+    sync::{Arc, Mutex}, path::Path,
 };
 
 use lazy_static::lazy_static;
@@ -9,7 +9,7 @@ use lazy_static::lazy_static;
 pub fn set_token(token: &str) {
     let home_dir = home::home_dir().unwrap();
     let config_file = home_dir.join(".tellme");
-    let exists = fs::try_exists(&config_file).unwrap();
+    let exists = Path::new(&config_file).exists();
     if exists {
         fs::remove_file(&config_file).unwrap();
     }
@@ -21,7 +21,7 @@ pub fn set_token(token: &str) {
 pub fn reset_token() {
   let home_dir = home::home_dir().unwrap();
   let config_file = home_dir.join(".tellme");
-  let exists = fs::try_exists(&config_file).unwrap();
+  let exists = Path::new(&config_file).exists();
   if exists {
       fs::remove_file(&config_file).unwrap();
   }
