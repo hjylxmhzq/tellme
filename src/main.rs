@@ -1,12 +1,12 @@
 mod api;
-mod token;
-mod loading;
 mod formatter;
+mod loading;
+mod token;
 
 use formatter::format_print;
 use rustyline::error::ReadlineError;
 use rustyline::DefaultEditor;
-use token::{reset_token, get_or_set_token};
+use token::{get_or_set_token, reset_token};
 
 #[tokio::main]
 async fn main() {
@@ -31,7 +31,9 @@ async fn main() {
     get_or_set_token().unwrap();
 
     if !should_loop {
-        let resp = loading::wait_with_loading(chat.question(&text)).await.unwrap();
+        let resp = loading::wait_with_loading(chat.question(&text))
+            .await
+            .unwrap();
         println!("{}", format_print(&resp.join("\n")));
     }
 
@@ -42,7 +44,13 @@ async fn main() {
                 rl.add_history_entry(line.as_str()).unwrap();
                 let resp = loading::wait_with_loading(chat.question(&line)).await;
                 match resp {
-                    Ok(resp) => println!("{}", format_print(&resp.join("\n"))),
+                    Ok(resp) => {
+                        if resp.len() == 0 {
+                            println!("No available answer, please try again.");
+                        } else {
+                            println!("{}", format_print(&resp.join("\n")))
+                        }
+                    }
                     Err(err) => println!("Error: {}", err.to_string()),
                 }
             }
