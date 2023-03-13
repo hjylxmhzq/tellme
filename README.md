@@ -2,6 +2,14 @@
 
 ### Installation
 
+Download binary with proper architecture in [release page](http://baid.com)
+
+Or build from source code:
+
+```shell
+cargo build --release
+```
+
 ### Usage
 
 
