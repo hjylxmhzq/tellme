@@ -2,7 +2,7 @@
 
 ### Installation
 
-Download binary with proper architecture in [release page](http://baid.com)
+Download binary with proper architecture in [release page](https://github.com/hjylxmhzq/tellme/releases)
 
 Or build from source code:
 
