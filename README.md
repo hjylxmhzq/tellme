@@ -1,4 +1,4 @@
-## "tellme" is a ChatGPT-3.5 command line client
+## A ChatGPT command line client
 
 ### Installation
 

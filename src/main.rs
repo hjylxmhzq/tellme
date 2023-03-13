@@ -1,7 +1,9 @@
 mod api;
 mod token;
 mod loading;
+mod formatter;
 
+use formatter::format_print;
 use rustyline::error::ReadlineError;
 use rustyline::DefaultEditor;
 use token::{reset_token, get_or_set_token};
@@ -30,7 +32,7 @@ async fn main() {
 
     if !should_loop {
         let resp = loading::wait_with_loading(chat.question(&text)).await.unwrap();
-        println!("{}", termimad::inline(&resp.join("\n")));
+        println!("{}", format_print(&resp.join("\n")));
     }
 
     while should_loop {
@@ -38,8 +40,11 @@ async fn main() {
         match readline {
             Ok(line) => {
                 rl.add_history_entry(line.as_str()).unwrap();
-                let resp = loading::wait_with_loading(chat.question(&line)).await.unwrap();
-                println!("{}", termimad::inline(&resp.join("\n")));
+                let resp = loading::wait_with_loading(chat.question(&line)).await;
+                match resp {
+                    Ok(resp) => println!("{}", format_print(&resp.join("\n"))),
+                    Err(err) => println!("Error: {}", err.to_string()),
+                }
             }
             Err(ReadlineError::Interrupted) => {
                 println!("exit");

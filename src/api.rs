@@ -100,7 +100,7 @@ impl ChatSession {
         Self { body }
     }
 
-    pub async fn question(&mut self, text: &str) -> Result<Vec<String>, ()> {
+    pub async fn question(&mut self, text: &str) -> Result<Vec<String>, reqwest::Error> {
         let client = reqwest::Client::new();
         let token = TOKEN.lock().unwrap().clone();
 
@@ -110,10 +110,9 @@ impl ChatSession {
             .header("Authorization", format!("Bearer {}", token.trim()))
             .header("Content-Type", "application/json")
             .body(self.body.serialize())
-            .timeout(Duration::from_secs(10))
+            .timeout(Duration::from_secs(20))
             .send()
-            .await
-            .unwrap();
+            .await?;
 
         let resp_text = resp.text().await.unwrap();
         let resp = serde_json::from_str::<ChatRespBody>(&resp_text).unwrap_or_else(|_| {
