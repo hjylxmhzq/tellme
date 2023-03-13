@@ -1,3 +1,5 @@
+use std::time::Duration;
+
 use serde::{Deserialize, Serialize};
 
 use crate::token::TOKEN;
@@ -108,6 +110,7 @@ impl ChatSession {
             .header("Authorization", format!("Bearer {}", token.trim()))
             .header("Content-Type", "application/json")
             .body(self.body.serialize())
+            .timeout(Duration::from_secs(10))
             .send()
             .await
             .unwrap();

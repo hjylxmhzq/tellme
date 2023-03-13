@@ -37,3 +37,11 @@ tellme
 >> and another question
 [another answer]
 ```
+
+### Proxy
+
+set HTTPS_PROXY or https_proxy as the proxy target
+
+```shell
+export https_proxy=http://127.0.0.1:1234
+```
