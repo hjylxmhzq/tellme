@@ -37,6 +37,7 @@ tellme
 >> and another question
 [another answer]
 ```
+![sample](https://raw.githubusercontent.com/hjylxmhzq/tellme/main/sample.gif)
 
 ### Proxy
 
